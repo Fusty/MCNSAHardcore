@@ -27,7 +27,8 @@ public class HardCore extends JavaPlugin{
 	private static final Logger log = Logger.getLogger("Minecraft");
 	private FileConfiguration customConfig = null;
 	private File customConfigFile = null;
-	public String world;
+	public static String world;
+	public final playerListener playerListener = new playerListener();
 	
 	
 	public void onEnable(){
