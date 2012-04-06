@@ -8,9 +8,10 @@ import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.logging.Logger; 
 
 
+import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -26,6 +27,7 @@ public class HardCore extends JavaPlugin{
 	private static final Logger log = Logger.getLogger("Minecraft");
 	private FileConfiguration customConfig = null;
 	private File customConfigFile = null;
+	public String world;
 	
 	
 	public void onEnable(){
@@ -36,6 +38,7 @@ public class HardCore extends JavaPlugin{
         if(!config.exists()){
         	saveDefaultConfig();
         }
+        world = getCustomConfig().getString("worldName");
         File hardCoreStats;
         File dir;
         hardCoreStats = new File("plugins/MCNSAHardcore/hardCoreStats.dat");
