@@ -3,6 +3,7 @@ package com.mcnsa.hardcore;
 import java.util.Map;
 import java.util.logging.Logger;
 
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -67,7 +68,9 @@ public class playerListener implements Listener {
 	    			slapi.save(stats, "plugins/MCNSAHardcore/stats.dat");
 	    		} catch (Exception e) {
 	    		}
+	        	returnMessage(player, "&aLooks like you've &cDIED!  &6Kills[&c"+newPlayerStats[0]+"&6]  Deaths[&c"+newPlayerStats[1]+"&6]");
 	        	return;
+	        	
 	        }
 	        //PvP
 	        if(killer != null){
@@ -89,10 +92,27 @@ public class playerListener implements Listener {
 	    			slapi.save(stats, "plugins/MCNSAHardcore/stats.dat");
 	    		} catch (Exception e) {
 	    		}
+	        	//Message everyone involved
+	        	returnMessage(player, "&aLooks like &e"+killer.toString()+"&a killed you.  &6Kills[&c"+newPlayerStats[0]+"&6]  Deaths[&c"+newPlayerStats[1]+"&6]");
+	        	returnMessage(killer,"&aGOT ONE! &e"+player.toString()+" &a, specifically.  &6Kills[&c"+newKillerStats[0]+"&6]  Deaths[&c"+newKillerStats[1]+"&6]");
+	        	return;
 	        }
 
 		}
 		
+		
+	}
+	public void returnMessage(CommandSender sender, String message) {
+		if(sender instanceof Player) {
+			sender.sendMessage(processColours(message));
+		}
+		else {
+			sender.sendMessage(message);//plugin.stripColours(message));
+		}
+	}
+	// allow for colour tags to be used in strings..
+	public String processColours(String str) {
+		return str.replaceAll("(&([a-f0-9]))", "\u00A7$2");
 	}
 	
 }
