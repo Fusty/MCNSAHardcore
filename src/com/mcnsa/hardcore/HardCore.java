@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.mcnsa.hardcore.slapi;
@@ -32,6 +33,9 @@ public class HardCore extends JavaPlugin{
 	
 	
 	public void onEnable(){
+		//Setup listener
+    	PluginManager pm = getServer().getPluginManager();
+    	pm.registerEvents(this.playerListener, this);
 		//Check for existing config, create if not present
     	File config;
         config = new File("plugins/MCNSAHardcore/config.yml");
@@ -48,9 +52,9 @@ public class HardCore extends JavaPlugin{
         	try {
         		dir.mkdirs();
         		hardCoreStats.createNewFile();
-        		Map<String, String[]> transactionList = new HashMap<String, String[]>();
+        		Map<String, String[]> stats = new HashMap<String, String[]>();
         		try {
-    				slapi.save(transactionList, "plugins/po8/po8transactions.dat");
+    				slapi.save(stats, "plugins/MCNSAHardcore/stats.dat");
     			} catch (Exception e) {
     			}
 			} catch (IOException e) {
