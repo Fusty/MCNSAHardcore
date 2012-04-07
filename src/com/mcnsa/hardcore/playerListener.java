@@ -1,9 +1,12 @@
 package com.mcnsa.hardcore;
 
+import java.io.File;
 import java.util.Map;
 import java.util.logging.Logger;
 
+import org.bukkit.World;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -13,8 +16,8 @@ import org.bukkit.event.player.PlayerJoinEvent;
 public class playerListener implements Listener {
 	private Logger log;
 	private slapi slapi;
-	private HardCore hardCore = new HardCore();
-	
+
+
 	@EventHandler
 	public void playerJoin(PlayerJoinEvent event){
 		//Upon login, make sure they have a set of stats
@@ -43,7 +46,7 @@ public class playerListener implements Listener {
 	@EventHandler
 	public void playerDeath(PlayerDeathEvent event){
 		//Only handle HardCore deaths  \m/
-		if (event.getEntity().getWorld().toString().equalsIgnoreCase(HardCore.world)){
+		if (event.getEntity().getWorld().getName().equalsIgnoreCase(HardCore.world)){
 			Player player = event.getEntity();
 			//killer could be null on PvE deaths
 			Player killer = player.getKiller();
@@ -61,7 +64,7 @@ public class playerListener implements Listener {
 	        	String[] oldPlayerStats = stats.get(player.toString());
 	        	//Wipe kills, increment deaths.
 	        	int deaths = Integer.valueOf(oldPlayerStats[1]);
-	        	deaths = deaths++;
+	        	deaths = deaths+1;
 	        	String[] newPlayerStats = new String[]{"0",""+deaths};
 	        	stats.put(player.toString(), newPlayerStats);
 	        	try {
@@ -77,14 +80,14 @@ public class playerListener implements Listener {
 	        	String[] oldPlayerStats = stats.get(player.toString());
 	        	//Wipe kills, increment deaths.
 	        	int deaths = Integer.valueOf(oldPlayerStats[1]);
-	        	deaths = deaths++;
+	        	deaths = deaths+1;
 	        	String[] newPlayerStats = new String[]{"0",""+deaths};
 	        	stats.put(player.toString(), newPlayerStats);
 	        	
 	        	String[] oldKillerStats = stats.get(killer.toString());
 	        	//Increment kills
 	        	int kills = Integer.valueOf(oldKillerStats[0]);
-	        	kills = kills++;
+	        	kills = kills+1;
 	        	String deathNoChange = oldKillerStats[1];
 	        	String[] newKillerStats = new String[]{""+kills,deathNoChange};
 	        	stats.put(killer.toString(), newKillerStats);

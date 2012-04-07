@@ -28,7 +28,7 @@ public class HardCore extends JavaPlugin{
 	private static final Logger log = Logger.getLogger("Minecraft");
 	private FileConfiguration customConfig = null;
 	private File customConfigFile = null;
-	public static String world;
+	public static String world = "world";
 	public final playerListener playerListener = new playerListener();
 	
 	
@@ -46,7 +46,7 @@ public class HardCore extends JavaPlugin{
         world = getCustomConfig().getString("worldName");
         File hardCoreStats;
         File dir;
-        hardCoreStats = new File("plugins/MCNSAHardcore/hardCoreStats.dat");
+        hardCoreStats = new File("plugins/MCNSAHardcore/stats.dat");
         dir = new File("plugins/MCNSAHardcore");
         if(!hardCoreStats.exists()){
         	try {
